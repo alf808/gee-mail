@@ -27,8 +27,12 @@
 				}
 
 				var numEmails = window.geemails.length;
+				// sort the geemails by date
+				window.geemails.sort(function(a,b){
+					return a.date - b.date;
+				})
 				emailNumber.innerHTML = "You have " + numEmails + " email items.";
-
+				// retrieve all the current email messages
 				for (var i = 0, j = numEmails; i < j; i++) {
 					// container for the mainItem and the mail body
 					var mailCont = createElem("mailContainer", "", main);
@@ -39,14 +43,9 @@
 					createElem("date", window.geemails[i].date, mailItem);
 					createElem("sender", window.geemails[i].sender, mailItem);
 					createElem("subject", window.geemails[i].subject, mailItem);
-					createElem("body", window.geemails[i].body, mailCont);
+					var bodyDiv = createElem("body", window.geemails[i].body, mailCont);
+					bodyDiv.style.display = "none";
 				}
-				// set the display of email Body to none
-				var emailBodyArr = document.getElementsByClassName("body");
-				for (var i = 0, j = emailBodyArr.length; i < j; i++) {
-					emailBodyArr[i].style.display = "none";
-				}
-
 				// call getNewMessage intermittently at a specific time
 				setInterval(function(){
 					var newMessage = getNewMessage();
