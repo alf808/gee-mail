@@ -6,7 +6,6 @@
 			window.onload = function(){
 				// ALL OF YOUR JAVASCRIPT CODE SHOULD GO HERE.
 				// We have to use window.onload so your JavaScript doesn't execute until the page has loaded and all HTML has been downloaded to your browser
-				//window.geemails
 
 				// generic function to create elements
 				function createElem (clsName, str, parent, id, tag) {
@@ -15,7 +14,14 @@
 					if (clsName) newElem.className = clsName;
 					if (id) newElem.id = id;
 					newElem.innerHTML = str;
-					parent.appendChild(newElem);
+					if (parent.id === "newEmails") {
+						// a form of prepending Child element so it appears above
+						// other sibling elements
+						// console.log(parent.firstChild);
+						parent.insertBefore(newElem, parent.firstChild);
+					} else {
+						parent.appendChild(newElem);
+					}
 					return newElem;
 				}
 
@@ -27,18 +33,18 @@
 				}
 
 				var numEmails = window.geemails.length;
-				// sort the geemails by date
+				// sort the geemails by date latest to oldest
 				window.geemails.sort(function(a,b){
-					return a.date - b.date;
+					return b.date - a.date;
 				})
 				emailNumber.innerHTML = "You have " + numEmails + " email items.";
 				// retrieve all the current email messages
 				for (var i = 0, j = numEmails; i < j; i++) {
 					// container for the mainItem and the mail body
-					var mailCont = createElem("mailContainer", "", main);
+					var mailCont = createElem("mailContainer", null, main);
 					mailCont.addEventListener("click", showBody);
 					// container for the clickable mail elements
-					var mailItem = createElem("mailItem", "", mailCont);
+					var mailItem = createElem("mailItem", null, mailCont);
 					// mail elements
 					createElem("date", window.geemails[i].date, mailItem);
 					createElem("sender", window.geemails[i].sender, mailItem);
@@ -47,11 +53,12 @@
 					bodyDiv.style.display = "none";
 				}
 				// call getNewMessage intermittently at a specific time
+				// the message will appear above the old messages
 				setInterval(function(){
 					var newMessage = getNewMessage();
-					var mailCont = createElem("mailContainer", "", main);
+					var mailCont = createElem("mailContainer", null, newEmails);
 					mailCont.addEventListener("click", showBody);
-					var mailItem = createElem("mailItem", "", mailCont);
+					var mailItem = createElem("mailItem", null, mailCont);
 					// mail elements
 					createElem("date", newMessage.date, mailItem);
 					createElem("sender", newMessage.sender, mailItem);
@@ -60,7 +67,7 @@
 					bodyDiv.style.display = "none";
 					numEmails++;
 					emailNumber.innerHTML = "You have " + numEmails + " email items.";
-				},5000);
+				}, 7000);
 
 			};
 		</script>
@@ -76,6 +83,7 @@
 				<div class="sender">From</div>
 				<div class="subject">Subject</div>
 			</div>
+			<div id="newEmails"></div>
 		</div>
 	</body>
 </html>
