@@ -1,0 +1,32 @@
+header {
+	text-align: center;
+}
+
+#heady {
+    font-weight: bold;
+    text-decoration: none;
+}
+.mailItem, .mailItem0 {
+    display: flex;
+    background-color: linen;
+    padding: 4px;
+    margin: 4px;
+}
+
+.date {
+    flex: 2;
+}
+.sender {
+    flex: 1;
+}
+.subject {
+    flex: 2;
+}
+.body {
+    display: none;
+    padding: 4px;
+    margin: 4px;
+}
+#emailNumber {
+	font-weight: bold;
+}

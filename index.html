@@ -2,17 +2,80 @@
 	<head>
 		<script src="js/mail-generator.js"></script>
 		<link href="css/style.css" rel="stylesheet" media="screen">
-    <script>
-      window.onload = function(){
-        // ALL OF YOUR JAVASCRIPT CODE SHOULD GO HERE. 
-        // We have to use window.onload so your JavaScript doesn't execute until the page has loaded and all HTML has been downloaded to your browser
-        
-      };
-    </script>
+		<script>
+			window.onload = function(){
+				// ALL OF YOUR JAVASCRIPT CODE SHOULD GO HERE.
+				// We have to use window.onload so your JavaScript doesn't execute until the page has loaded and all HTML has been downloaded to your browser
+				//window.geemails
+
+				// window.setInterval(getNewMessage, 3000);
+				// setInterval(getNewMessage,500);
+
+				function createElem (clsName, str, parent, id, tag) {
+					var tag = tag || "div";
+					var newElem = document.createElement(tag);
+					if (clsName) newElem.className = clsName;
+					if (id) newElem.id = id;
+					newElem.innerHTML = str;
+					parent.appendChild(newElem);
+					return newElem;
+				}
+
+				function showBody() {
+					var sm = this.querySelector(".body");
+					// console.log(sm);
+					if (sm.style.display === "none") sm.style.display = "block";
+					else sm.style.display = "none";
+				}
+
+				var numEmails = window.geemails.length;
+				emailNumber.innerHTML = "You have " + numEmails + " email items.";
+				// console.log(numEmails);
+
+				for (var i = 0, j = numEmails; i < j; i++) {
+					// container for the mainItem and the mail body
+					var mailCont = createElem("mailContainer", "", main);
+					mailCont.addEventListener("click", showBody);
+					// container for the clickable mail elements
+					var mailItem = createElem("mailItem", "", mailCont);
+					// mail elements
+					createElem("date", window.geemails[i].date, mailItem);
+					createElem("sender", window.geemails[i].sender, mailItem);
+					createElem("subject", window.geemails[i].subject, mailItem);
+					createElem("body", window.geemails[i].body, mailCont, "body"+i);
+				}
+
+				var emailBodyArr = document.getElementsByClassName("body");
+				for (var i = 0, j = emailBodyArr.length; i < j; i++) {
+					emailBodyArr[i].style.display = "none";
+				}
+
+				setInterval(function(){
+					var newMessage = getNewMessage();
+					var mailCont = createElem("mailContainer", "", main);
+					mailCont.addEventListener("click", showBody);
+					// container for the clickable mail elements
+					var mailItem = createElem("mailItem", "", mailCont);
+					// mail elements
+					createElem("date", newMessage.date, mailItem);
+					createElem("sender", newMessage.sender, mailItem);
+					createElem("subject", newMessage.subject, mailItem);
+					createElem("body", newMessage.body, mailCont, "body"+i);
+				},10000);
+			};
+		</script>
 	</head>
 	<body>
+		<header>
+			<h1>The Next Great Email Application</h1>
+			<div id="emailNumber"></div>
+	</header>
 		<div class="container" id="main">
-			Build Me!
+			<div class="mailItem0" id="heady">
+				<div class="date">Date</div>
+				<div class="sender">From</div>
+				<div class="subject">Subject</div>
+			</div>
 		</div>
 	</body>
 </html>
