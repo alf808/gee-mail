@@ -8,9 +8,7 @@
 				// We have to use window.onload so your JavaScript doesn't execute until the page has loaded and all HTML has been downloaded to your browser
 				//window.geemails
 
-				// window.setInterval(getNewMessage, 3000);
-				// setInterval(getNewMessage,500);
-
+				// generic function to create elements
 				function createElem (clsName, str, parent, id, tag) {
 					var tag = tag || "div";
 					var newElem = document.createElement(tag);
@@ -54,7 +52,6 @@
 					var newMessage = getNewMessage();
 					var mailCont = createElem("mailContainer", "", main);
 					mailCont.addEventListener("click", showBody);
-					// container for the clickable mail elements
 					var mailItem = createElem("mailItem", "", mailCont);
 					// mail elements
 					createElem("date", newMessage.date, mailItem);
@@ -75,7 +72,7 @@
 			<div id="emailNumber"></div>
 	</header>
 		<div class="container" id="main">
-			<div class="mailItem0" id="heady">
+			<div class="mailItemHeader" id="heady">
 				<div class="date">Date</div>
 				<div class="sender">From</div>
 				<div class="subject">Subject</div>

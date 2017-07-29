@@ -6,13 +6,15 @@ header {
     font-weight: bold;
     text-decoration: none;
 }
-.mailItem, .mailItem0 {
+.mailItem, .mailItemHeader {
     display: flex;
     background-color: linen;
     padding: 4px;
     margin: 4px;
 }
-
+.mailItem:hover {
+    background-color: coral;
+}
 .date {
     flex: 2;
 }
@@ -29,4 +31,5 @@ header {
 }
 #emailNumber {
 	font-weight: bold;
+	font-size: 18px;
 }
